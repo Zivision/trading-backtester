@@ -1,2 +1,3 @@
 (library
- (name trading_backtester))
+ (name trading_backtester)
+ (libraries curly))

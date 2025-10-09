@@ -1,0 +1,4 @@
+(executable
+ (public_name trading-backtester)
+ (name main)
+ (libraries trading_backtester))

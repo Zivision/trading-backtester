@@ -1,6 +1,5 @@
 open Trading_backtester
 
 let () =
-  (* Fetch URLs *)
-  Data.fetch_url "https://opam.ocaml.org"
-  Data.fetch_url "https://www.google.com"
+  Connection.get_body "https://yahoo-finance15.p.rapidapi.com/api/v1/markets/insider-trades"
+

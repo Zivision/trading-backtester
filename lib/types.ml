@@ -1,11 +1,26 @@
-(* Response *)
+(*
+  Network Types
+*)
+
+(* Network Response *)
 type network_response = {
-  http_code: int;
+  code: int;
   headers: string;
   body: string;
 }
 
-(* Price data for onw day *)
+(* URL and headers (With h1 and h2 meaning "header one and header two") *)
+type network_info = {
+  uri: string;
+  h1: string;
+  h2: string;
+}
+
+(*
+  Trading Types
+*)
+
+(* Price data for one day *)
 type price_bar = {
   date: string;
   open_price: float;

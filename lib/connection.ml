@@ -1,6 +1,7 @@
 open Cohttp_lwt_unix
 open Cohttp
 open Lwt
+open Types
 
 (* Connect to a given url *)
 let get_connect url = 
@@ -14,8 +15,10 @@ let get_connect url =
     Printf.printf "Headers: %s\n" (res |> Response.headers |> Header.to_string);
     body |> Cohttp_lwt.Body.to_string >|= fun body -> 
       Printf.printf "Body of length: %d\n" @@ String.length body;
-      body
+      let result: Types.network_response  = {
+        http_code = code;
+        headers = (res |> Response.headers |> Header.to_string);
+        body = body;
+      } in result
 
-let get_body url = 
-  let body = Lwt_main.run @@ get_connect url in
-  print_endline @@ "Receieved body\n" ^ body
+let get_response url = Lwt_main.run @@ get_connect url

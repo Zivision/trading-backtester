@@ -1,3 +1,10 @@
+(* Response *)
+type network_response = {
+  http_code: int;
+  headers: string;
+  body: string;
+}
+
 (* Price data for onw day *)
 type price_bar = {
   date: string;

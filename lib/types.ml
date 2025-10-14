@@ -24,10 +24,16 @@ type network_info = {
 type price_bar = {
   date: string;
   open_price: float;
-  high: float;
-  low: float;
-  close: float;
+  high_price: float;
+  low_price: float;
+  close_price: float;
   volume: int;
+}
+
+(* Timeseries type for JSON data*)
+type timeseries = {
+  symbol: string;
+  price_bars: price_bar list;
 }
 
 (* Portfolio data *)

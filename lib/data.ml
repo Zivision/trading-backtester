@@ -25,18 +25,19 @@ let parse_bar timestamp json =
   }
 ;;
 
+(* Parse the incoming json then return a timeseries record *)
 let parse_timeseries str =
   let json = Yojson.Basic.from_string str in 
   let meta = json |> member "Meta Data" in
-  let symbol = meta |> member "2. symbol" |> to_string in
+  let symbol = meta |> member "2. Symbol" |> to_string in
   let ts = json |> member "Time Series (5min)" |> to_assoc in
   let bars = List.map (fun (timestamp, bar_json) -> 
-    print_endline timestamp;
     parse_bar timestamp bar_json;
   ) ts in {
     symbol = symbol; 
     price_bars = bars
   }
+;;
 
 let get_data = 
   let alpha_vantage: Types.network_info = {
@@ -45,11 +46,7 @@ let get_data =
     h2 = "request";
   } in
     let result = Lwt_main.run @@ Connection.get_connect_api alpha_vantage in 
-      print_endline result.headers;
-      Printf.printf "HTTP Code: %d\n" result.code;
-
-      (*json_string_to_file "alphavantage.json" result.body*)
+    Printf.printf "HTTP Code: %d\n" result.code;
     let parsed_data = parse_timeseries result.body in
-    print_string parsed_data.symbol
-
+    print_endline parsed_data.symbol
 ;;

@@ -46,7 +46,6 @@ let get_data =
     h2 = "request";
   } in
     let result = Lwt_main.run @@ Connection.get_connect_api alpha_vantage in 
-    Printf.printf "HTTP Code: %d\n" result.code;
     let parsed_data = parse_timeseries result.body in
     print_endline parsed_data.symbol
 ;;

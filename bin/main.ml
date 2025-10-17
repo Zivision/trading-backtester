@@ -1,6 +1,6 @@
 open Trading_backtester
 
 let () =
-  Data.get_data
+  Data.get_data;
 ;;
 

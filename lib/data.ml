@@ -39,6 +39,19 @@ let parse_timeseries str =
   }
 ;;
 
+(* Function for iterating on the time series record *)
+let iter_timeseries ts =
+  Printf.printf "%s\n" ts.symbol;
+  let bars = ts.price_bars in 
+  List.iter (fun (price_bar) -> 
+    Printf.printf "Date: %s\n" price_bar.date;
+    Printf.printf "Open: %f\nHigh: %f\nLow: %f\nClose: %f\n" 
+      price_bar.open_price price_bar.high_price 
+      price_bar.low_price price_bar.close_price;
+    Printf.printf "Volume: %d\n" price_bar.volume
+  ) bars
+;;
+
 let get_data = 
   let alpha_vantage: Types.network_info = {
     uri = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&outputsize=full&apikey=demo";
@@ -47,5 +60,5 @@ let get_data =
   } in
     let result = Lwt_main.run @@ Connection.get_connect_api alpha_vantage in 
     let parsed_data = parse_timeseries result.body in
-    print_endline parsed_data.symbol
+    iter_timeseries parsed_data
 ;;
